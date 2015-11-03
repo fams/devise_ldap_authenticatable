@@ -1,4 +1,5 @@
 require 'devise_ldap_authenticatable/strategy'
+require 'bcrypt'
 
 module Devise
   module Models
@@ -46,6 +47,10 @@ module Devise
       # Checks if a resource is valid upon authentication.
       def valid_ldap_authentication?(password)
         Devise::LDAP::Adapter.valid_credentials?(login_with, password)
+      end
+
+      def valid_password?(password)
+        valid_ldap_authentication?(password)
       end
 
       def ldap_entry
